@@ -1,0 +1,8 @@
+.env
+person1-backend/.env
+venv/
+.venv/
+person1-backend/venv/
+chroma_store/
+__pycache__/
+node_modules/
