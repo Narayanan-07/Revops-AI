@@ -20,13 +20,6 @@ def seed_static_data():
     "target_industries": ["SaaS", "Fintech", "Retail", "Healthcare", "BFSI", "HR Tech", "EdTech"],
     "target_roles": ["VP CX", "Head of HR", "VP Product", "Chief People Officer", "Head of Operations"],
     "geographies": ["India", "US", "UK", "SEA", "Middle East"],
-    "founded": "2017",
-    "headquarters": "Palo Alto, California, USA (operations in Cochin, India)",
-    "employees": "~400",
-    "revenue": "~$48M ARR (estimated)",
-    "funding": "$1.4M seed",
-    "customers": "100,000+ across 149 countries"
-
     }).execute()
 
     # 2. ICP Criteria
@@ -64,7 +57,7 @@ def seed_static_data():
     ]
     supabase.table("won_deals").insert(won).execute()
 
-    print("✅ Static data seeded successfully")
+    print("Static data seeded successfully")
 
 if __name__ == "__main__":
     seed_static_data()
