@@ -34,14 +34,11 @@ export function useLeads() {
       };
 
       data?.forEach(item => {
-        // Map not_a_lead strictly if lead_context decides it, or if it's the pipeline stage
-        // Wait, TASK.md says: NOT_A_LEAD cards appear in Lead Scoring column with red styling.
-        // Wait, "Pipeline Stages — Exact Strings" has "not_a_lead" as a pipeline stage. 
-        // "not_a_lead -> Disqualified by Agent 2". But the task says "NOT_A_LEAD cards appear in Lead Scoring column with red styling." Let's keep them in lead_scoring if requested, or map properly.
-        // I will group by current_stage but if current_stage is not_a_lead, I'll put it in lead_scoring, or I can just keep it in grouped.not_a_lead and render grouped.not_a_lead inside the lead_scoring column.
-        
         if (item.current_stage) {
-          if (grouped[item.current_stage]) {
+          if (item.current_stage === 'not_a_lead') {
+            grouped.lead_scoring.push(item);
+            grouped.not_a_lead.push(item);
+          } else if (grouped[item.current_stage]) {
             grouped[item.current_stage].push(item);
           }
         }

@@ -134,14 +134,20 @@ export default function LeadDrawer({ isOpen, onClose, selectedItem }) {
               <div className="space-y-4 text-sm mt-4 text-gray-300">
                 <ListDisplay title="Exact Needs" items={agent3.exact_customer_needs} />
                 <ListDisplay title="Feature Recommendations" items={agent3.feature_recommendations} />
-                <ListDisplay title="Demo Focus" items={agent3.demo_focus_areas} highlight />
-                
-                {agent3.recommended_pricing_tier && (
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                    <span className="font-bold text-emerald-500 text-xs uppercase tracking-wider">Recommended Tier</span>
-                    <span className="font-bold text-white">{agent3.recommended_pricing_tier}</span>
+                <ListDisplay title="Demo Focus" items={agent3.demo_focus_areas} numbered highlight />
+                {agent3.confirmed_buying_intent && (
+                  <div className="mb-4">
+                    <h4 className="font-bold text-white mb-2 text-xs uppercase tracking-widest text-gray-500">Confirmed Intent</h4>
+                    <p className="italic bg-black/20 p-3 rounded-lg border border-white/5">{agent3.confirmed_buying_intent}</p>
                   </div>
                 )}
+                
+                  {agent3.recommended_pricing_tier && (
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-4">
+                      <span className="font-bold text-emerald-500 text-xs uppercase tracking-wider">Recommended Tier</span>
+                      <span className="font-bold text-white bg-emerald-500/20 px-2 py-1 rounded shadow-sm">{agent3.recommended_pricing_tier}</span>
+                    </div>
+                  )}
                 
                 <div>
                   <h4 className="font-bold text-white mb-2 text-xs uppercase tracking-widest text-gray-500 flex items-center gap-2">
@@ -186,27 +192,37 @@ function SectionBlock({ title, icon, color, bgColor, agent, children }) {
   );
 }
 
-function ListDisplay({ title, items, isWarning = false, isError = false, highlight = false }) {
+function ListDisplay({ title, items, isWarning = false, isError = false, highlight = false, numbered = false }) {
   if (!items || items.length === 0) return null;
   
   return (
-    <div>
+    <div className="mb-4">
       <h4 className="font-bold text-white mb-1.5 text-xs uppercase tracking-widest text-gray-500">{title}</h4>
-      <ul className="space-y-1.5">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-[13px] leading-snug">
-            <span className={clsx(
-              "mt-1 w-1.5 h-1.5 rounded-full shrink-0",
-              isError ? "bg-red-500" : isWarning ? "bg-yellow-500" : highlight ? "bg-indigo-400" : "bg-gray-600"
-            )} />
-            <span className={clsx(
-              isError ? "text-red-200" : isWarning ? "text-yellow-200" : highlight ? "text-indigo-100" : "text-gray-300"
-            )}>
+      {numbered ? (
+        <ol className="space-y-1.5 list-decimal list-outside pl-4 text-[13px] leading-snug">
+          {items.map((item, i) => (
+            <li key={i} className={clsx(highlight ? "text-indigo-200" : "text-gray-300", "pl-1")}>
               {item}
-            </span>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <ul className="space-y-1.5">
+          {items.map((item, i) => (
+            <li key={i} className="flex items-start gap-2 text-[13px] leading-snug">
+               <span className={clsx(
+                 "mt-1 w-1.5 h-1.5 rounded-full shrink-0",
+                 isError ? "bg-red-500" : isWarning ? "bg-yellow-500" : highlight ? "bg-indigo-400" : "bg-gray-600"
+               )} />
+               <span className={clsx(
+                 isError ? "text-red-200" : isWarning ? "text-yellow-200" : highlight ? "text-indigo-100" : "text-gray-300"
+               )}>
+                 {item}
+               </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
