@@ -56,8 +56,8 @@ export default function KanbanBoard({ leads, loading }) {
                     />
                   ))
                 ) : (
-                  <div className="h-full flex items-center justify-center text-[11px] text-gray-600 uppercase font-bold tracking-widest border border-dashed border-white/5 rounded-xl mt-4 py-12">
-                    Empty Queue
+                  <div className="h-full flex items-center justify-center text-[12px] text-gray-500 uppercase font-medium tracking-wide border border-dashed border-white/5 rounded-xl mt-4 py-8 mb-4">
+                    No leads in this stage
                   </div>
                 )}
               </div>
