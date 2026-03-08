@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+supabase
+crewai
+chromadb
+google-genai
+python-dotenv
+pydantic
+httpx
