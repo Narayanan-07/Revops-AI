@@ -3,31 +3,30 @@ import { Users, UserCheck, UserX, Target, BarChart3 } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function StatsBar({ leads }) {
-  // Compute metrics
-  const totalLeads = 
-    leads.icp_alignment.length + 
-    leads.lead_scoring.length + 
-    leads.awaiting_transcript.length + 
-    leads.discovery_intelligence.length + 
-    leads.ready_for_presales.length + 
-    leads.not_a_lead.length;
+  // Use optional chaining to guard against missing keys
+  const totalLeads =
+    (leads.icp_alignment?.length || 0) +
+    (leads.lead_scoring?.length || 0) +
+    (leads.discovery_intelligence?.length || 0) +
+    (leads.ready_for_presales?.length || 0) +
+    (leads.not_a_lead?.length || 0);
 
-  const goodLeadsCount = 
-    leads.awaiting_transcript.length + 
-    leads.discovery_intelligence.length + 
-    leads.ready_for_presales.length +
-    leads.lead_scoring.filter(l => l.lead_context?.some(c => c.lead_label === 'GOOD_LEAD')).length;
+  const goodLeadsCount =
+    (leads.discovery_intelligence?.length || 0) +
+    (leads.ready_for_presales?.length || 0) +
+    (leads.lead_scoring?.filter(l => l.lead_context?.some(c => c.lead_label === 'GOOD_LEAD')).length || 0);
 
-  const notALeadCount = leads.not_a_lead.length;
-  const readyForPresalesCount = leads.ready_for_presales.length;
+  const notALeadCount = leads.not_a_lead?.length || 0;
+  const readyForPresalesCount = leads.ready_for_presales?.length || 0;
 
-  // Compute average fit score
+  // Compute average fit score (de-duplicate leads by id first)
+  const seen = new Set();
   let totalFitScore = 0;
   let leadsWithFitScore = 0;
 
-  // Flatten all contexts to find fit scores
   Object.values(leads).flat().forEach(lead => {
-    // Agent 2 creates Contexts with fit_score
+    if (seen.has(lead.id)) return;
+    seen.add(lead.id);
     const scoringContext = lead.lead_context?.find(c => c.stage === 'lead_scoring');
     if (scoringContext && scoringContext.fit_score != null) {
       totalFitScore += scoringContext.fit_score;

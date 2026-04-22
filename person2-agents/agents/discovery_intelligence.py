@@ -1,7 +1,7 @@
 import os
 import json
 import re
-from google import genai
+import google.generativeai as genai
 from dotenv import load_dotenv
 
 from tools.supabase_tools import (
@@ -13,12 +13,12 @@ from tools.chroma_tools import embed_lead_context, recall_won_deals
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 def ask_gemini(prompt: str) -> str:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(
+        prompt
     )
     return response.text
 

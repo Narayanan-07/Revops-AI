@@ -1,9 +1,9 @@
 fastapi
 uvicorn
 supabase
-crewai
-chromadb
-google-genai
 python-dotenv
 pydantic
 httpx
+crewai
+chromadb
+google-generativeai

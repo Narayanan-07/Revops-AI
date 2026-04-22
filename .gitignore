@@ -1,8 +1,47 @@
+# ===========================
+# Environment Variables
+# ===========================
 .env
+.env.*
+**/.env
+**/.env.*
+
+# Explicit per-folder coverage
 person1-backend/.env
+person2-agents/.env
+person3-frontend/.env
+person4-infra/.env
+
+# ===========================
+# Python
+# ===========================
 venv/
 .venv/
-person1-backend/venv/
-chroma_store/
-__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.Python
+
+# ===========================
+# Node / Frontend
+# ===========================
 node_modules/
+dist/
+.vite/
+
+# ===========================
+# ChromaDB
+# ===========================
+chroma_store/
+**/chroma_store/
+
+# ===========================
+# Misc
+# ===========================
+.DS_Store
+Thumbs.db
+*.log
