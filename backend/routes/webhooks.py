@@ -5,8 +5,8 @@ from typing import Any, Dict
 
 router = APIRouter()
 
-# Add person2-agents to Python path so we can import crew.py
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../person2-agents")))
+# Add agents to Python path so we can import crew.py
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../agents")))
 
 try:
     from crew import trigger_agent

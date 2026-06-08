@@ -60,3 +60,37 @@ def advance_pipeline(lead_id: str, stage: str, agent: str):
         "moved_at": "now()",
         "moved_by": agent
     }, on_conflict="lead_id").execute()
+
+
+# Columns that exist on company_intelligence. Used to filter out any
+# extra keys the enrichment model may invent before we write the row.
+COMPANY_INTELLIGENCE_COLUMNS = {
+    "company_name", "domain", "industry", "employee_count", "revenue_range",
+    "hq_location", "founded_year", "funding_stage", "crm_used",
+    "survey_tools_used", "marketing_tools", "hr_tools", "tech_stack",
+    "uses_competitor_of_surveysparrow", "competitor_names",
+    "last_funding_amount", "last_funding_date", "recent_news",
+    "hiring_for_roles", "leadership_changes", "recent_product_launches",
+    "likely_pain_points",
+}
+
+
+def upsert_company_intelligence(profile: dict) -> dict:
+    """Insert or update a company_intelligence row, keyed on the unique domain.
+    Only known columns are written so the enrichment agent can be loose with
+    its JSON. Returns the stored row."""
+    row = {k: v for k, v in profile.items() if k in COMPANY_INTELLIGENCE_COLUMNS}
+
+    # Coerce a couple of typed columns so Postgres doesn't reject the write.
+    if "founded_year" in row:
+        try:
+            row["founded_year"] = int(row["founded_year"])
+        except (TypeError, ValueError):
+            row.pop("founded_year")
+    if "uses_competitor_of_surveysparrow" in row:
+        row["uses_competitor_of_surveysparrow"] = bool(row["uses_competitor_of_surveysparrow"])
+
+    result = supabase.table("company_intelligence").upsert(
+        row, on_conflict="domain"
+    ).execute()
+    return result.data[0] if result.data else row

@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* ============================================================
+   RevOps AI — light theme.
+   Palette is intentionally limited to white, black, orange, green.
+   - orange  → brand / primary actions / in-progress
+   - green   → success / good lead / positive signals
+   - black/zinc → text + disqualified ("not a lead") + neutral
+   - white/stone → surfaces
+   ============================================================ */
+@theme {
+  --color-page: #f6f6f4;       /* app background      */
+  --color-surface: #ffffff;    /* cards / panels      */
+  --color-surface-2: #f1f1ee;  /* columns / subtle    */
+  --color-border: #e5e3df;     /* hairlines           */
+  --color-ink: #17150f;        /* primary text (near black) */
+  --color-ink-soft: #6f6b62;   /* muted text          */
+
+  --color-brand: #f97316;      /* orange-500          */
+  --color-brand-strong: #ea580c;
+  --color-success: #16a34a;    /* green-600           */
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--color-page)] text-[var(--color-ink)] antialiased font-sans;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-black/15 rounded-full;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-black/25;
+}

@@ -88,10 +88,14 @@ CREATE TABLE IF NOT EXISTS leads (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   company_name TEXT NOT NULL,
   domain TEXT NOT NULL,
+  email TEXT,
   message TEXT,
   source TEXT DEFAULT 'web_form',
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- If the leads table already exists from an earlier version, add the column:
+--   ALTER TABLE leads ADD COLUMN IF NOT EXISTS email TEXT;
 
 CREATE TABLE IF NOT EXISTS transcripts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

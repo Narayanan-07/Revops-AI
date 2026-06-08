@@ -1,8 +1,8 @@
 .env
-person4-infra/.env
+infra/.env
 venv/
 
-person4-infra/venv/
+infra/venv/
 chroma_store/
 __pycache__/
 node_modules/

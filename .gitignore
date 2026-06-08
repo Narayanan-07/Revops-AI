@@ -7,10 +7,10 @@
 **/.env.*
 
 # Explicit per-folder coverage
-person1-backend/.env
-person2-agents/.env
-person3-frontend/.env
-person4-infra/.env
+backend/.env
+agents/.env
+frontend/.env
+infra/.env
 
 # ===========================
 # Python

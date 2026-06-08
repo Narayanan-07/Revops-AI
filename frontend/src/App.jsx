@@ -8,7 +8,7 @@ import LeadForm from './pages/LeadForm';
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-[var(--color-board-bg)] text-white overflow-hidden flex flex-col font-sans selection:bg-indigo-500/30">
+      <div className="min-h-screen bg-[var(--color-page)] text-[var(--color-ink)] overflow-hidden flex flex-col font-sans selection:bg-orange-500/20">
         <Navbar />
         
         {/* Main Content Area */}
